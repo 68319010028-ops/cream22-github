@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หน้าเว็บพร้อมเมนูด้านบนและ Footer แบบ Responsive</title>
+    <style>
+        /* ==========================================
+           1. ตั้งค่าพื้นฐานและการเลื่อนหน้าจอ (Global Styles)
+           ========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth; /* ทำให้หน้าจอเลื่อนแบบนุ่มนวลเวลาคลิกเมนู */
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* ==========================================
+           2. แถบเมนูด้านบนติดหน้าจอ (Sticky Navbar)
+           ========================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95); /* ขาวโปร่งแสงเล็กน้อย */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #27ae60; /* เปลี่ยนเป็นโทนสีเขียวให้เข้ากับธีม */
+            text-decoration: none;
+        }
+
+        .menu-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .menu-links li {
+            margin-left: 20px;
+        }
+
+        .menu-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        /* เอฟเฟกต์ Hover ของเมนูด้านบน */
+        .menu-links a:hover {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        /* ==========================================
+           3. ส่วนเนื้อหาจำลอง (Sections)
+           ========================================== */
+        section {
+            padding: 100px 50px;
+            height: 80vh; /* ความสูงแต่ละเซกชัน */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        #home { background-color: #ffffff; }
+        #about { background-color: #e8f8f5; }
+        #services { background-color: #eaf2f8; }
+        #contact { background-color: #f4ecf7; }
+
+        section h1 {
+            font-size: 40px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        section p {
+            font-size: 18px;
+            color: #7f8c8d;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        /* ==========================================
+           4. ส่วนท้ายของเว็บไซต์ (Responsive Footer)
+           ========================================== */
+        .site-footer {
+            background-color: #1a252f; /* พื้นหลังสีเข้ม (Dark Navy)ตามสั่ง */
+            color: #ffffff; /* ตัวอักษรสีขาวตามสั่ง */
+            padding: 60px 0 20px 0;
+            font-size: 14px;
+            border-top: 4px solid #27ae60; /* เส้นขอบบนสีเขียวเพิ่มลูกเล่น */
+        }
+
+        /* จัดโครงสร้างบล็อกด้านในให้แบ่งเป็น 3 คอลัมน์ */
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: table;
+            width: 100%;
+        }
+
+        .footer-block {
+            display: table-cell;
+            width: 33.33%;
+            padding: 0 20px;
+            vertical-align: top;
+        }
+
+        /* ตกแต่งหัวข้อใน Footer */
+        .footer-block h3 {
+            color: #27ae60; /* สีหัวข้อเด่นชัด */
+            font-size: 18px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        /* เส้นใต้หัวข้อสั้นๆ เพิ่มความสวยงาม */
+        .footer-block h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: #27ae60;
+        }
+
+        .footer-block p {
+            line-height: 1.8;
+            color: #d5dbdb; /* สีขาวอมเทาเล็กน้อยเพื่อให้สบายตาเวลาอ่าน */
+        }
+
+        /* ตกแต่งส่วนเมนูเว็บไซต์ใน Footer */
+        .footer-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-nav li {
+            margin-bottom: 12px;
+        }
+
+        .footer-nav a {
+            color: #d5dbdb;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease; /* สร้างความนุ่มนวลเวลาเลื่อนเมาส์ผ่าน */
+        }
+
+        /* เอฟเฟกต์ Hover บนเมนูท้ายเว็บ (ตัวอักษรเปลี่ยนสีและสไลด์เลื่อนขยับขวา) */
+        .footer-nav a:hover {
+            color: #ffffff;
+            transform: translateX(8px); /* ตัวอักษรเลื่อนขยับไปทางขวา 8 พิกเซลแบบนุ่มนวล */
+            font-weight: bold;
+        }
+
+        /* ส่วนช่องทางการติดต่อ */
+        .footer-contact p {
+            margin-bottom: 12px;
+        }
+        
+        .contact-icon {
+            font-style: normal;
+            margin-right: 8px;
+        }
+
+        /* แถบลิขสิทธิ์ด้านล่างสุด */
+        .footer-bottom {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #2c3e50;
+            color: #7f8c8d;
+            font-size: 13px;
+        }
+
+        /* ==========================================
+           5. การรองรับหน้าจอมือถือ (Responsive Design)
+           ========================================== */
+        @media screen and (max-width: 768px) {
+            /* ปรับเมนูด้านบนบนมือถือ */
+            .navbar {
+                padding: 15px 20px;
+            }
+            .menu-links li {
+                margin-left: 10px;
+            }
+            .menu-links a {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+
+            /* ปรับส่วนเนื้อหา */
+            section {
+                padding: 80px 20px;
+                height: auto;
+            }
+            section h1 {
+                font-size: 30px;
+            }
+
+            /* เปลี่ยน Footer จาก 3 คอลัมน์แนวนอน เป็นเรียงต่อกันแนวตั้งบนมือถือ */
+            .footer-block {
+                display: block;
+                width: 100%;
+                margin-bottom: 35px;
+                padding: 0;
+            }
+            
+            .footer-container {
+                padding: 0 30px;
+            }
+
+            .footer-nav a:hover {
+                transform: translateX(5px); /* ลดระยะสไลด์บนมือถือให้พอดีหน้าจอ */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#home" class="logo">GreenAgency</a>
+        <ul class="menu-links">
+            <li><a href="#home">หน้าแรก</a></li>
+            <li><a href="#about">เกี่ยวกับเรา</a></li>
+            <li><a href="#services">บริการ</a></li>
+            <li><a href="#contact">ติดต่อ</a></li>
+        </ul>
+    </nav>
+
+    <section id="home">
+        <h1>หน้าแรก</h1>
+        <p>ยินดีต้อนรับเข้าสู่หน้าแรกของเว็บไซต์เรา ทดลองเลื่อนหน้าจอลงด้านล่างสุด หรือคลิกที่เมนูด้านบนเพื่อดูเอฟเฟกต์การเลื่อนแบบนุ่มนวลไปยังส่วนต่างๆ</p>
+    </section>
+
+    <section id="about">
+        <h1>เกี่ยวกับเรา</h1>
+        <p>ข้อมูลเกี่ยวกับบริษัทหรือองค์กรของเรา เรามุ่งมั่นพัฒนาสิ่งที่ดีที่สุดให้กับคุณด้วยทีมงานมืออาชีพที่มีประสบการณ์ยาวนาน</p>
+    </section>
+
+    <section id="services">
+        <h1>บริการ</h1>
+        <p>เรามีบริการที่หลากหลายเพื่อตอบสนองความต้องการของลูกค้าทุกรูปแบบอย่างครบวงจรและมีประสิทธิภาพสูงสุด</p>
+    </section>
+
+    <section id="contact">
+        <h1>ติดต่อ</h1>
+        <p>คุณสามารถดูข้อมูลการติดต่อและที่อยู่ของหน่วยงานเราเพิ่มเติมได้ที่แถบ Footer สีเข้มที่อยู่ด้านล่างสุดของหน้านี้ได้เลยครับ</p>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            
+            <div class="footer-block about-agency">
+                <h3>ข้อมูลเกี่ยวกับหน่วยงาน</h3>
+                <p>เราเป็นหน่วยงานยุคใหม่ที่มุ่งเน้นการพัฒนาเทคโนโลยีและนวัตกรรมที่เป็นมิตรต่อสิ่งแวดล้อม เพื่อขับเคลื่อนองค์กรและสังคมให้ก้าวไปสู่ความยั่งยืนในอนาคต</p>
+            </div>
+
+            <div class="footer-block footer-nav">
+                <h3>เมนูเว็บไซต์</h3>
+                <ul>
+                    <li><a href="#home">หน้าแรก</a></li>
+                    <li><a href="#about">เกี่ยวกับเรา</a></li>
+                    <li><a href="#services">บริการของเรา</a></li>
+                    <li><a href="#contact">ช่องทางการติดต่อ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-block footer-contact">
+                <h3>ช่องทางการติดต่อ</h3>
+                <p><i class="contact-icon">📍</i> จังหวัดสกลนคร</p>
+                <p><i class="contact-icon">📞</i> เบอร์โทรศัพท์: 0800278123ห</p>
+                <p><i class="contact-icon">✉️</i> อีเมลติดต่อ: contact@greenagency.or.th</p>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 GreenAgency. All Rights Reserved. | พัฒนาและออกแบบหน้าเว็บแบบ Responsive</p>
+        </div>
+    </footer>
+
+</body>
+</html>
